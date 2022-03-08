@@ -1,36 +1,19 @@
 <?php
 
-namespace App\Controller;
+
+namespace App\DataFixtures;
+
 
 use App\Entity\Comment;
-use App\Repository\CommentRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 
-class HomeController extends AbstractController
+class AppFixtures extends Fixture
 {
-    /**
-     * @Route("/", name="app_home")
-     */
-    public function index(): Response
-    {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
-    }
 
-
-    /**
-     * @Route("/comment", name="api_comments")
-     */
-    public function loadComment(CommentRepository $repository, SerializerInterface $serializer)
+    public function load(ObjectManager $manager)
     {
-        /*// TODO: Implement load() method.
+        // TODO: Implement load() method.
         $comment = new Comment("J\'aime bien votre produit");
         $comment_2 = new Comment("Create your own dynamic, fake REST API. We were in need for some mock data for our project.");
         $comment_3 = new Comment("Like literally, some copy-pasta JSON file would have done the ...");
@@ -56,26 +39,7 @@ class HomeController extends AbstractController
         $manager->persist($comment_10);
         $manager->persist($comment_11);
 
-        $manager->flush();*/
-
-        $datas = $repository->findAll();
-//        $comments = array();
-//        /**
-//         * @var Comment $comment
-//         */
-//        foreach ($datas as $key => $comment)
-//        {
-//            $comments[$key]['id'] = $comment->getId();
-//            $comments[$key]['comment'] = $comment->getComment();
-//            $comments[$key]['createdAt'] = $comment->getCreatedAt()->format('Y-m-d H:i:s');
-//            $comments[$key]['updatedAt'] = $comment->getUpdatedAt() == null ?$comment->getUpdatedAt() : $comment->getUpdatedAt()->format('Y-m-d H:i:s');
-//        }
-//        return new JsonResponse($comments);
-
-        return new JsonResponse($serializer->serialize($datas, 'json'), 201, [], true);
-
-
-
+        $manager->flush();
     }
 
 }
